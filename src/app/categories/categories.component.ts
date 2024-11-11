@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { CategoriesService } from '../services/categories.service';
+import { Category } from '../models/category';
 
 @Component({
   selector: 'app-categories',
@@ -17,35 +18,14 @@ export class CategoriesComponent {
 
   categoryData: string = '';
 
-  constructor(private firestore: Firestore) {}
+  constructor(private categoriesService: CategoriesService) {}
 
   onSubmit(formData:any) {
-    let categoryData = {
+    let categoryData: Category = {
       category: formData.value.category
     }
 
-    let subCategoryData = {
-      subCategory: 'subCategory1'
-    }
-
-    // Create Firestore DB Instance (collection)
-    const dbInstance = collection(this.firestore, 'categories');
-
-    // Add the new data to the collection => To Firestore DB
-    addDoc(dbInstance, categoryData)
-    .then((docRef) => {
-      console.log(docRef);
-
-      // Add doc to sub-collection
-      addDoc(collection(this.firestore, `categories/${docRef.id}/subCategories`), subCategoryData)
-      .then((docRef1) => {
-        console.log(docRef1);
-      })
-      .catch(err => console.log(err));
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+    this.categoriesService.saveData(categoryData);    
+  }   
 
 }

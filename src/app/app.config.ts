@@ -6,6 +6,8 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { routes } from './app.routes';
 import { environment } from '../environments/environment.development';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,5 +15,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideAnimations(), // required animations providers
+    provideToastr(), // Toastr providers
   ]
 };
+
