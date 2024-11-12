@@ -30,4 +30,42 @@
             </form>
         </div>
     </div>
+
+    <div class="row mt-5 mb-5">
+
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6">
+            <div class="card shadow-effect">
+                <div class="card-body">
+                    <table class="table row-border hover">
+                        <thead>
+                            <tr>
+                                <th>Sl. No.</th>
+                                <th>Category</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let category of categoryArray; let i = index">
+                                <td> {{ i + 1 }} </td>
+                                <td>
+                                    <div *ngFor="let obj of category | keyvalue">
+                                        <div *ngFor="let data of obj.value | keyvalue">
+                                            {{ data.value }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3"></div>
+
+    </div>
+
 </div>

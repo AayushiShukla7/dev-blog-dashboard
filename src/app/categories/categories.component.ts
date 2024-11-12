@@ -18,13 +18,16 @@ import { Observable } from 'rxjs';
 export class CategoriesComponent implements OnInit{
 
   categoryData: string = '';
+  categoryArray: Array<object> = [];
 
   constructor(private categoriesService: CategoriesService) {}
 
   ngOnInit(): void {
     this.categoriesService.loadData()
     .then(res => {
-      console.log(res);
+      //console.log(res);
+      this.categoryArray = res;
+      console.log(this.categoryArray);
     });
   }
 
