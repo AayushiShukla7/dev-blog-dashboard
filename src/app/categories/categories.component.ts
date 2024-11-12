@@ -20,14 +20,19 @@ export class CategoriesComponent implements OnInit{
   categoryData: string = '';
   categoryArray: Array<object> = [];
 
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(private categoriesService: CategoriesService) {
+    this.loadCategories();
+  }
 
   ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  loadCategories() {
     this.categoriesService.loadData()
     .then(res => {
-      //console.log(res);
       this.categoryArray = res;
-      console.log(this.categoryArray);
+      //console.log(this.categoryArray);
     });
   }
 
@@ -37,6 +42,9 @@ export class CategoriesComponent implements OnInit{
     }
 
     this.categoriesService.saveData(categoryData);    
+
+    formData.reset();
+    this.loadCategories();
   }   
 
 }
