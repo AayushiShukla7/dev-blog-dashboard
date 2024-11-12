@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CategoriesService } from '../services/categories.service';
 import { Category } from '../models/category';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-categories',
@@ -14,11 +15,18 @@ import { Category } from '../models/category';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit{
 
   categoryData: string = '';
 
   constructor(private categoriesService: CategoriesService) {}
+
+  ngOnInit(): void {
+    this.categoriesService.loadData()
+    .then(res => {
+      console.log(res);
+    });
+  }
 
   onSubmit(formData:any) {
     let categoryData: Category = {

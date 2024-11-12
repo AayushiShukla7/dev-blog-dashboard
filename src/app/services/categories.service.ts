@@ -1,11 +1,13 @@
+import { ResourceLoader } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, Firestore, getDocs, onSnapshot, query } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesService {
+export class CategoriesService { 
 
   constructor(private firestore: Firestore, private toastr: ToastrService) { }
 
@@ -38,5 +40,24 @@ export class CategoriesService {
         positionClass: 'toast-top-right'
       } );
     });
+  }
+
+  async loadData() {
+    var result: Array<any> = [{}];
+    const dbInstance = collection(this.firestore, 'categories');
+    //return collectionData(dbInstance, { idField: 'id' });
+
+    const q = query(dbInstance);
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      result.push({ 'id': doc.id, 'data': doc.data()});
+    });
+
+    result.splice(0,1);
+
+    return result;
   }
 }
