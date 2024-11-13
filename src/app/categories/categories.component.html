@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 bg-secondary-theme p-5 shadow-effect">
-            <h3 class="text-center text-theme-primary">New Categories</h3>
+            <h3 class="text-center text-theme-primary">{{ formStatus }} Categories</h3>
             <p class="text-center mb-5">You can add new categories from here..!</p>
 
             <form 
@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-theme mb-2" [disabled]="categoryForm.invalid">Add Category</button>
+                    <button class="btn btn-block btn-theme mb-2" [disabled]="categoryForm.invalid">{{ formStatus }} Category</button>
                 </div>
             </form>
         </div>
@@ -47,16 +47,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let category of categoryArray; let i = index">
+                            <tr *ngFor="let categoryEntry of categoryArray; let i = index">
                                 <td> {{ i + 1 }} </td>
                                 <td>
-                                    <div *ngFor="let obj of category | keyvalue">
-                                        <div *ngFor="let data of obj.value | keyvalue">
-                                            {{ data.value }}
+                                    <div *ngFor="let data of categoryEntry | keyvalue">
+                                        <div *ngFor="let category of data.value | keyvalue">
+                                            {{ category.value }}
                                         </div>
                                     </div>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <div *ngFor="let data of categoryEntry | keyvalue">
+                                        <div *ngFor="let category of data.value | keyvalue">
+                                            <button class="btn btn-sm btn-warning" (click)="onEdit(categoryEntry, category.value)"> Edit </button>
+                                            <button class="btn btn-sm btn-danger mx-2" (click)="onDelete(categoryEntry)"> Delete </button>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

@@ -1,6 +1,6 @@
 import { ResourceLoader } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, Firestore, getDocs, onSnapshot, query } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, deleteDoc, doc, Firestore, getDocs, onSnapshot, query, updateDoc } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 
@@ -60,4 +60,43 @@ export class CategoriesService {
 
     return result;
   }
+
+  updateData(id: string, data: object) {
+    //console.log('id: ' + id + ' and data: ' + JSON.stringify(data));
+
+    const docInstance = doc(this.firestore, 'categories', id);
+    //return updateDoc(docInstance, data);
+
+    updateDoc(docInstance, data).then((docRef) => {
+      //console.log(docRef);
+      this.toastr.success('Data Updated Successfully!', 'SUCCESS', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    })
+    .catch(err => {
+      this.toastr.error(err.error, 'ERROR!', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    });
+  }
+
+  deleteData(id: string) {
+    const docInstance = doc(this.firestore, 'categories', id);
+    deleteDoc(docInstance).then((docRef) => {
+      //console.log(docRef);
+      this.toastr.success('Data Deleted Successfully!', 'SUCCESS', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    })
+    .catch(err => {
+      this.toastr.error(err.error, 'ERROR!', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    });
+  }
+
 }
