@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-new-post',
@@ -14,13 +15,21 @@ import { RouterLink } from '@angular/router';
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.css'
 })
-export class NewPostComponent {
+export class NewPostComponent implements OnInit {
 
   permalink: string = '';
   imgSrc: any = '..//public/placeholder.jpg';
   selectedImage: any;
+  categoryArray: Array<object> = [];
 
-  constructor() {}
+  constructor(private categoriesService: CategoriesService) {}
+
+  ngOnInit(): void {
+    this.categoriesService.loadData()
+    .then(res => {
+      this.categoryArray = res;
+    });
+  }
 
   onTitleChanged(event: any) {
     const title = event.target.value;
