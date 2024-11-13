@@ -60,9 +60,11 @@ export class CategoriesComponent implements OnInit{
   }
 
   onDelete(clickedObj:any) {
-    this.categoryId = clickedObj["id"];
-    this.categoriesService.deleteData(this.categoryId);
-    this.loadCategories();
+    if(confirm("Are you sure you want to delete this category?")) {
+      this.categoryId = clickedObj["id"];
+      this.categoriesService.deleteData(this.categoryId);
+      this.loadCategories();
+    }    
   }
 
 }
