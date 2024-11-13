@@ -17,6 +17,8 @@ import { RouterLink } from '@angular/router';
 export class NewPostComponent {
 
   permalink: string = '';
+  imgSrc: any = '..//public/placeholder.jpg';
+  selectedImage: any;
 
   constructor() {}
 
@@ -24,6 +26,16 @@ export class NewPostComponent {
     const title = event.target.value;
     this.permalink = title.replace(/\s/g, '-');
     //console.log(this.permalink);
+  }
+
+  showPreview(event: any) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.imgSrc = e.target?.result;
+    }
+
+    reader.readAsDataURL(event.target.files[0]);
+    this.selectedImage = event.target.files[0];
   }
 
 }
