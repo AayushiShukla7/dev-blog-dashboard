@@ -8,6 +8,7 @@ import { routes } from './app.routes';
 import { environment } from '../environments/environment.development';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideAnimations(), // required animations providers
     provideToastr(), // Toastr providers
+    provideHttpClient()
   ]
 };
 

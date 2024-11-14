@@ -6,7 +6,7 @@
             <p class="mb-5"> You can add your new post here </p>
         </div>
 
-        <form>
+        <form #newPostForm>
 
             <div class="row">
 
@@ -60,7 +60,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label> Content </label>
-                                <textarea cols="30" rows="10" class="form-control"></textarea>
+                                <angular-editor placeholder="Add your content here" [config]="config"></angular-editor>
                             </div>
                         </div>
                     </div>

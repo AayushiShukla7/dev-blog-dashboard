@@ -5,7 +5,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { AngularEditorModule } from '@wfpena/angular-wysiwyg';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,9 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     FooterComponent,
     DashboardComponent,
-    CategoriesComponent
+    CategoriesComponent,
+    AngularEditorModule,
+    HttpClientModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
