@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CategoriesService } from '../../services/categories.service';
 import { AngularEditorConfig, AngularEditorModule } from '@wfpena/angular-wysiwyg';
@@ -14,7 +14,8 @@ import { AngularEditorConfig, AngularEditorModule } from '@wfpena/angular-wysiwy
     RouterLink,
     CommonModule,
     FormsModule,
-    AngularEditorModule
+    AngularEditorModule,
+    ReactiveFormsModule
   ],
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.css'
@@ -55,14 +56,33 @@ export class NewPostComponent implements OnInit {
       },
     ]
   };
+
+  postForm: FormGroup = new FormGroup({});
+  pl: FormControl = new FormControl({value: '', disabled: true});
   
-  constructor(private categoriesService: CategoriesService) {}
+  constructor(private categoriesService: CategoriesService, private fb: FormBuilder) 
+  {    
+    this.pl.addValidators(Validators.required);
+
+    this.postForm = this.fb.group({
+      title: ['', [Validators.required, Validators.minLength(10)]],
+      permalink: this.pl,
+      excerpt: ['', [Validators.required, Validators.minLength(50)]],
+      category: ['', Validators.required],
+      postImage: ['', Validators.required],
+      content: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
     this.categoriesService.loadData()
     .then(res => {
       this.categoryArray = res;
     });
+  }
+
+  get fc() {
+    return this.postForm.controls;
   }
 
   onTitleChanged(event: any) {

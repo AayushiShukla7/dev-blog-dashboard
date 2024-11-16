@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@wfpena/angular-wysiwyg';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     DashboardComponent,
     CategoriesComponent,
     AngularEditorModule,
-    HttpClientModule
+    ReactiveFormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
