@@ -4,8 +4,7 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { RouterLink } from '@angular/router';
 import { CategoriesService } from '../../services/categories.service';
 import { AngularEditorConfig, AngularEditorModule } from '@wfpena/angular-wysiwyg';
-// import { Editor } from '@tiptap/core';
-// import StarterKit from '@tiptap/starter-kit';
+import { Post } from '../../models/post';
 
 @Component({
   selector: 'app-new-post',
@@ -25,7 +24,7 @@ export class NewPostComponent implements OnInit {
   permalink: string = '';
   imgSrc: any = '..//public/placeholder.jpg';
   selectedImage: any;
-  categoryArray: Array<object> = [];
+  categoryArray: Array<any> = [];
   htmlContent: any;
   
   config: AngularEditorConfig = {
@@ -88,7 +87,6 @@ export class NewPostComponent implements OnInit {
   onTitleChanged(event: any) {
     const title = event.target.value;
     this.permalink = title.replace(/\s/g, '-');
-    //console.log(this.permalink);
   }
 
   showPreview(event: any) {
@@ -99,6 +97,31 @@ export class NewPostComponent implements OnInit {
 
     reader.readAsDataURL(event.target.files[0]);
     this.selectedImage = event.target.files[0];
+  }
+
+  onSubmit() {
+    console.log(this.postForm.value);
+
+    let splitCategoryData =this.postForm.value.category.split('-');
+
+    const postData: Post = {
+      title: this.postForm.value.title,
+      permalink: this.postForm.value.permalink,
+      category: {
+        categoryId: splitCategoryData[0],
+        category: splitCategoryData[1]
+      },
+      postImagePath: '',
+      excerpt: this.postForm.value.excerpt,
+      content: this.postForm.value.content,
+      isfeatured: false,
+      views: 0,
+      status: 'new',
+      createdAt: new Date()
+    };
+
+    console.log(postData);
+
   }
 
 }

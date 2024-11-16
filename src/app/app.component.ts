@@ -6,7 +6,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { CommonModule } from '@angular/common';
 import { AngularEditorModule } from '@wfpena/angular-wysiwyg';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     FooterComponent,
     DashboardComponent,
     CategoriesComponent,
-    AngularEditorModule,
-    ReactiveFormsModule
+    AngularEditorModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
