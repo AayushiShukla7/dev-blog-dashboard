@@ -22,6 +22,7 @@
     "@kolkov/angular-editor": "^3.0.0-beta.0",
     "@wfpena/angular-wysiwyg": "^2.0.1",
     "bootstrap": "^5.3.3",
+    "cloudinary": "^2.5.1",
     "firebase": "^11.0.1",
     "ngx-tiptap": "^11.1.0",
     "ngx-toastr": "^19.0.0",

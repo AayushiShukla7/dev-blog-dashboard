@@ -98,6 +98,7 @@
                             formControlName="postImage"
                             [ngClass]="{ 'is-invalid': fc['postImage'].touched && fc['postImage'].invalid }"
                         >
+                        <!-- <button id="upload_widget" class="cloudinary-button">Upload files</button> -->
                         <div *ngIf="fc['postImage'].errors?.['required']">
                             <div class="alert alert-danger" *ngIf="fc['postImage'].touched && fc['postImage'].invalid"> Image is required. </div>
                         </div>

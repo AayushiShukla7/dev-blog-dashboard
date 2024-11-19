@@ -97,12 +97,18 @@ export class NewPostComponent implements OnInit {
 
     reader.readAsDataURL(event.target.files[0]);
     this.selectedImage = event.target.files[0];
+
+    // Remove after test!!!
+    let postImagePath_Cloudinary = this.categoriesService.uploadImage(this.selectedImage);
+    console.log(postImagePath_Cloudinary);
   }
 
   onSubmit() {
     console.log(this.postForm.value);
 
-    let splitCategoryData =this.postForm.value.category.split('-');
+    let splitCategoryData = this.postForm.value.category.split('-');
+
+    let postImagePath_Cloudinary = this.categoriesService.uploadImage(this.selectedImage);
 
     const postData: Post = {
       title: this.postForm.value.title,
