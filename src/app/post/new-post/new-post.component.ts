@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { CategoriesService } from '../../services/categories.service';
 import { AngularEditorConfig, AngularEditorModule } from '@wfpena/angular-wysiwyg';
 import { Post } from '../../models/post';
+import { PostsService } from '../../services/posts.service';
 
 @Component({
   selector: 'app-new-post',
@@ -59,7 +60,7 @@ export class NewPostComponent implements OnInit {
   postForm: FormGroup = new FormGroup({});
   pl: FormControl = new FormControl({value: '', disabled: true});
   
-  constructor(private categoriesService: CategoriesService, private fb: FormBuilder) 
+  constructor(private categoriesService: CategoriesService, private fb: FormBuilder, private postsService: PostsService) 
   {    
     this.pl.addValidators(Validators.required);
 
@@ -97,22 +98,16 @@ export class NewPostComponent implements OnInit {
 
     reader.readAsDataURL(event.target.files[0]);
     this.selectedImage = event.target.files[0];
-
-    // Remove after test!!!
-    let postImagePath_Cloudinary = this.categoriesService.uploadImage(this.selectedImage);
-    console.log(postImagePath_Cloudinary);
   }
 
   onSubmit() {
-    console.log(this.postForm.value);
+    //console.log(this.postForm.value);
 
-    let splitCategoryData = this.postForm.value.category.split('-');
-
-    let postImagePath_Cloudinary = this.categoriesService.uploadImage(this.selectedImage);
+    let splitCategoryData = this.postForm.value.category.split('-');    
 
     const postData: Post = {
       title: this.postForm.value.title,
-      permalink: this.postForm.value.permalink,
+      permalink: this.permalink,
       category: {
         categoryId: splitCategoryData[0],
         category: splitCategoryData[1]
@@ -126,8 +121,9 @@ export class NewPostComponent implements OnInit {
       createdAt: new Date()
     };
 
-    console.log(postData);
+    this.postsService.uploadImage(this.selectedImage, postData);
 
+    console.log(postData);
   }
 
 }

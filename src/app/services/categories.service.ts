@@ -2,15 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { addDoc, collection, deleteDoc, doc, Firestore, getDocs, query, updateDoc } from '@angular/fire/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriesService { 
-
-  cloudName = "de3clglcb"; 
-  uploadPreset = "dev-blog-uploads";
+export class CategoriesService {   
 
   constructor(private firestore: Firestore, private toastr: ToastrService, private http: HttpClient) { }
 
@@ -100,26 +96,6 @@ export class CategoriesService {
         positionClass: 'toast-top-right'
       } );
     });
-  }
-
-  // Cloudinary - Image Upload
-
-  uploadImage(file: any) {
-    const formData = new FormData();
-    let imageUrl = '';
-    let url = 'https://api.cloudinary.com/v1_1/'+ this.cloudName + '/image/upload';
-
-    formData.append('file', file);
-    formData.append('upload_preset', this.uploadPreset);
-    formData.append('cloud_name', this.cloudName);
-    formData.append('public_id', (file.name + Date().toString()));
-
-    this.http.post(url,formData).subscribe((imageData: any) => {
-      //console.log(imageData);
-      imageUrl = imageData.url;
-      console.log('Image URL: ' + imageUrl); 
-      return imageData;     
-    });
-  }
+  }  
 
 }
