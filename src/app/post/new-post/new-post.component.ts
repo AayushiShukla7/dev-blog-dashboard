@@ -122,8 +122,9 @@ export class NewPostComponent implements OnInit {
     };
 
     this.postsService.uploadImage(this.selectedImage, postData);
-
-    console.log(postData);
+    
+    this.postForm.reset();
+    this.imgSrc = '..//public/placeholder.jpg';
   }
 
 }
