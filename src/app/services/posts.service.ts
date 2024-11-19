@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, Firestore, getDocs, query } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docData, Firestore, getDocs, query } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +79,11 @@ export class PostsService {
     result.splice(0,1);
 
     return result;
+  }
+
+  loadSingleDocData(id: any) {
+    const docInstance = doc(this.firestore, 'posts', id);
+    return docData(docInstance).pipe(take(1));
   }
 
 }

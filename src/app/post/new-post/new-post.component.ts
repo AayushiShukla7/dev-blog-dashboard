@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, NgModule, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CategoriesService } from '../../services/categories.service';
 import { AngularEditorConfig, AngularEditorModule } from '@wfpena/angular-wysiwyg';
 import { Post } from '../../models/post';
@@ -59,19 +59,41 @@ export class NewPostComponent implements OnInit {
 
   postForm: FormGroup = new FormGroup({});
   pl: FormControl = new FormControl({value: '', disabled: true});
+  post: any;
+  formStatus: string = 'Add New';
   
-  constructor(private categoriesService: CategoriesService, private fb: FormBuilder, private postsService: PostsService) 
-  {    
-    this.pl.addValidators(Validators.required);
+  constructor(
+    private categoriesService: CategoriesService, 
+    private fb: FormBuilder, 
+    private postsService: PostsService,
+    private route: ActivatedRoute
+  ) 
+  {   
+    // Capture the query parameter
+    this.route.queryParams.subscribe((val: any) => {
+      this.postsService.loadSingleDocData(val.id).subscribe((post: any) => {
+        console.log(post);
+        this.post = post;
 
-    this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(10)]],
-      permalink: this.pl,
-      excerpt: ['', [Validators.required, Validators.minLength(50)]],
-      category: ['', Validators.required],
-      postImage: ['', Validators.required],
-      content: ['', Validators.required]
-    });
+        // Reactive Form + Validations        
+        this.pl.addValidators(Validators.required);
+        this.postForm = this.fb.group({
+          title: [this.post.title, [Validators.required, Validators.minLength(10)]],
+          permalink: this.pl,
+          excerpt: [this.post.excerpt, [Validators.required, Validators.minLength(50)]],
+          category: [`${this.post.category.categoryId}-${this.post.category.category}`, Validators.required],
+          postImage: ['', Validators.required],
+          content: [this.post.content, Validators.required]
+        });
+
+        // Load Image
+        this.imgSrc = this.post.postImagePath;
+
+        this.formStatus = 'Edit';
+
+      });
+    });   
+    
   }
 
   ngOnInit(): void {
