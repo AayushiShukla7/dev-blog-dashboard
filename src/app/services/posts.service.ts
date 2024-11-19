@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, Firestore, getDocs, query } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -11,7 +12,12 @@ export class PostsService {
   cloudName = "de3clglcb"; 
   uploadPreset = "dev-blog-uploads";
 
-  constructor(private firestore: Firestore, private toastr: ToastrService, private http: HttpClient) { }
+  constructor(
+    private firestore: Firestore, 
+    private toastr: ToastrService, 
+    private http: HttpClient,
+    private router: Router
+  ) { }
 
   // Cloudinary - Image Upload
 
@@ -45,6 +51,8 @@ export class PostsService {
         timeOut: 5000,
         positionClass: 'toast-top-right'
       } );
+
+      this.router.navigateByUrl('/posts');
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
@@ -52,6 +60,24 @@ export class PostsService {
         positionClass: 'toast-top-right'
       } );
     });
+  }
+
+  async loadData() {
+    var result: Array<any> = [{}];
+    const dbInstance = collection(this.firestore, 'posts');
+
+    const q = query(dbInstance);
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      result.push({ 'id': doc.id, 'data': doc.data()});
+    });
+
+    result.splice(0,1);
+
+    return result;
   }
 
 }
