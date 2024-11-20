@@ -74,30 +74,46 @@ export class NewPostComponent implements OnInit {
     this.route.queryParams.subscribe((val: any) => {
       this.postId = val.id;
 
-      this.postsService.loadSingleDocData(val.id).subscribe((post: any) => {
-        console.log(post);        
-        this.post = post;        
-
+      // For Edit Action
+      if(this.postId) {
+        this.postsService.loadSingleDocData(val.id).subscribe((post: any) => {
+          //console.log(post);        
+          this.post = post;        
+  
+          // Reactive Form + Validations        
+          var pl = new FormControl({value: this.post.permalink, disabled: true});
+          pl.addValidators(Validators.required);
+  
+          this.postForm = this.fb.group({
+            title: [this.post.title, [Validators.required, Validators.minLength(10)]],
+            permalink: pl,
+            excerpt: [this.post.excerpt, [Validators.required, Validators.minLength(50)]],
+            category: [`${this.post.category.categoryId}-${this.post.category.category}`, Validators.required],
+            postImage: ['', Validators.required],
+            content: [this.post.content, Validators.required]
+          });
+  
+          //this.postForm.patchValue({ permalink: this.post.permalink });
+          this.imgSrc = this.post.postImagePath;  // Load Image  
+          this.formStatus = 'Edit';
+        });
+      }
+      else {
         // Reactive Form + Validations        
-        var pl = new FormControl({value: this.post.permalink, disabled: true});
+        var pl = new FormControl({value: '', disabled: true});
         pl.addValidators(Validators.required);
-        
+
         this.postForm = this.fb.group({
-          title: [this.post.title, [Validators.required, Validators.minLength(10)]],
+          title: ['', [Validators.required, Validators.minLength(10)]],
           permalink: pl,
-          excerpt: [this.post.excerpt, [Validators.required, Validators.minLength(50)]],
-          category: [`${this.post.category.categoryId}-${this.post.category.category}`, Validators.required],
+          excerpt: ['', [Validators.required, Validators.minLength(50)]],
+          category: ['', Validators.required],
           postImage: ['', Validators.required],
-          content: [this.post.content, Validators.required]
+          content: ['', Validators.required]
         });
 
-        //this.postForm.patchValue({ permalink: this.post.permalink });
-
-        // Load Image
-        this.imgSrc = this.post.postImagePath;
-
-        this.formStatus = 'Edit';
-      });
+      }
+      
     });   
     
   }
