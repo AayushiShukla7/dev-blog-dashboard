@@ -43,6 +43,7 @@
                                 <td>{{ (post.data.createdAt.seconds * 1000) | date }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" routerLink="/posts/new" [queryParams]="{id: post.id}"> Edit </button>
+                                    <button class="btn btn-sm btn-danger m-2" (click)="onDelete(post.id)"> Delete </button>
                                 </td>
                             </tr>
                         </tbody>

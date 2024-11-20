@@ -23,11 +23,22 @@ export class AllPostComponent implements OnInit {
   constructor(private postsService: PostsService)  {}
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData() {
     this.postsService.loadData()
     .then(res => {
       //console.log(res);
       this.postArray = res;
     });
+  }
+
+  onDelete(postId: any) {
+    if(confirm("Are you sure you wish to delete this post?")) {
+      this.postsService.deleteData(postId);
+      this.loadData();
+    }    
   }
 
 }

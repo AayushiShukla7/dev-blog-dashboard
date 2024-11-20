@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, docData, Firestore, getDocs, query, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, docData, Firestore, getDocs, query, updateDoc } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -46,6 +46,12 @@ export class PostsService {
         this.saveData(postData);
       }        
     });
+  }
+
+  // #TODO: Finish the destroy asset (single) Cloudinary Admin API call
+  deleteImage(publicId: any) {
+    let url = 'https://api.cloudinary.com/v1_1/'+ this.cloudName + '/image/upload';
+
   }
 
   saveData(postData: any) {
@@ -112,5 +118,22 @@ export class PostsService {
       } );
     });
   }
+
+  deleteData(id: string) {
+    const docInstance = doc(this.firestore, 'posts', id);
+    deleteDoc(docInstance).then((docRef) => {
+      //console.log(docRef);
+      this.toastr.success('Data Deleted Successfully!', 'SUCCESS', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    })
+    .catch(err => {
+      this.toastr.error(err.error, 'ERROR!', {
+        timeOut: 5000,
+        positionClass: 'toast-top-right'
+      } );
+    });
+  }  
 
 }
