@@ -58,9 +58,10 @@ export class NewPostComponent implements OnInit {
   };
 
   postForm: FormGroup = new FormGroup({});
-  pl: FormControl = new FormControl({value: '', disabled: true});
+  //pl: FormControl = new FormControl({value: '', disabled: true});
   post: any;
   formStatus: string = 'Add New';
+  postId: any;
   
   constructor(
     private categoriesService: CategoriesService, 
@@ -71,26 +72,31 @@ export class NewPostComponent implements OnInit {
   {   
     // Capture the query parameter
     this.route.queryParams.subscribe((val: any) => {
+      this.postId = val.id;
+
       this.postsService.loadSingleDocData(val.id).subscribe((post: any) => {
-        console.log(post);
-        this.post = post;
+        console.log(post);        
+        this.post = post;        
 
         // Reactive Form + Validations        
-        this.pl.addValidators(Validators.required);
+        var pl = new FormControl({value: this.post.permalink, disabled: true});
+        pl.addValidators(Validators.required);
+        
         this.postForm = this.fb.group({
           title: [this.post.title, [Validators.required, Validators.minLength(10)]],
-          permalink: this.pl,
+          permalink: pl,
           excerpt: [this.post.excerpt, [Validators.required, Validators.minLength(50)]],
           category: [`${this.post.category.categoryId}-${this.post.category.category}`, Validators.required],
           postImage: ['', Validators.required],
           content: [this.post.content, Validators.required]
         });
 
+        //this.postForm.patchValue({ permalink: this.post.permalink });
+
         // Load Image
         this.imgSrc = this.post.postImagePath;
 
         this.formStatus = 'Edit';
-
       });
     });   
     
@@ -143,7 +149,7 @@ export class NewPostComponent implements OnInit {
       createdAt: new Date()
     };
 
-    this.postsService.uploadImage(this.selectedImage, postData);
+    this.postsService.uploadImage(this.selectedImage, postData, this.formStatus, this.postId);
     
     this.postForm.reset();
     this.imgSrc = '..//public/placeholder.jpg';
