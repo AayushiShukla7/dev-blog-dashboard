@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, authState, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
 
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoggedInGuard: boolean = false;
 
   constructor(private auth: Auth, private toastr: ToastrService, private router: Router) { }
 
@@ -22,8 +23,11 @@ export class AuthService {
       });
 
       this.loadUser(logRef);
+
       this.loggedIn.next(true);
-      this.router.navigateByUrl('');  // Go to dashboard
+      this.isLoggedInGuard = true;
+
+      this.router.navigateByUrl('/');  // Go to dashboard
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
@@ -46,7 +50,10 @@ export class AuthService {
       });
 
       localStorage.removeItem('user');  // Remove all user login data
+
       this.loggedIn.next(false);
+      this.isLoggedInGuard = false;
+
       this.router.navigateByUrl('/login');  // Go to Login
     })
     .catch(err => {
