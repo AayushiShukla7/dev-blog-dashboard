@@ -4,7 +4,7 @@
         <a href="#" class="site-logo"> DEV-BLOG </a>
     </div>
 
-    <div *ngIf="isLoggedIn$ | async" class="container justify-content-center">
+    <div *ngIf="isLoggedIn$ | async" class="container justify-content-end">
         <a href="#" class="mx-3"> {{ userEmail }} </a>
         <button class="btn btn-sm btn-info bg-secondary-theme text-theme-primary" (click)="onLogOut()"> Logout </button>
     </div>

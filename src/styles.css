@@ -4,8 +4,10 @@
 @import "../node_modules/@wfpena/angular-wysiwyg/_index.scss";
 
 :root {
-    --primary-color: #026467;
-    --secondary-color: #E5F5EA;
+    /* --primary-color: #026467;
+    --secondary-color: #E5F5EA; */
+    --primary-color: #005070;
+    --secondary-color: #91d7e3;
     --body-text-color: #596392;
     --navbar-footer-color: #F9F9F9;
 }
