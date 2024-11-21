@@ -19,13 +19,13 @@
             <div class="card shadow-effect">
                 <div class="card-body">
 
-                    <table class="table row-border hover" style="table-layout:fixed;">
+                    <table class="table row-border hover">
                         <thead>
                             <tr>
                                 <th> Sl. No. </th>
                                 <th> Post Image </th>
                                 <th> Title </th>
-                                <th> Excerpt </th>
+                                <!-- <th> Excerpt </th> -->
                                 <th> Category </th>
                                 <th> Date </th>
                                 <th> Actions </th>
@@ -33,17 +33,20 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let post of postArray; let i = index;">
-                                <td width="10"> {{ i + 1 }}</td>
+                                <td width="100"> {{ i + 1 }}</td>
                                 <td width="200">
                                     <img src="{{ post.data.postImagePath }}" class="img img-fluid">
                                 </td>
-                                <td width="200">{{ post.data.title }}</td>
-                                <td width="300">{{ post.data.excerpt }}</td>
-                                <td>{{ post.data.category.category }}</td>
+                                <td width="250">{{ post.data.title }}</td>
+                                <!-- <td width="300">{{ post.data.excerpt }}</td> -->
+                                <td width="150">{{ post.data.category.category }}</td>
                                 <td>{{ (post.data.createdAt.seconds * 1000) | date }}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" routerLink="/posts/new" [queryParams]="{id: post.id}"> Edit </button>
-                                    <button class="btn btn-sm btn-danger m-2" (click)="onDelete(post.id)"> Delete </button>
+                                    <button class="btn btn-sm btn-danger mx-2" (click)="onDelete(post.id)"> Delete </button>
+
+                                    <button *ngIf="!post.data.isFeatured" class="btn btn-sm btn-success" (click)="onFeatured(post.id, true)"> Mark Featured </button>
+                                    <button *ngIf="post.data.isFeatured" class="btn btn-sm btn-info mx-2" (click)="onFeatured(post.id, false)"> Remove Featured </button>
                                 </td>
                             </tr>
                         </tbody>

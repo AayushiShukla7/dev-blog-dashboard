@@ -19,7 +19,7 @@ export class CategoriesService {
     .then((docRef) => {
       //console.log(docRef);
       this.toastr.success('Data Saved Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
 
@@ -35,7 +35,7 @@ export class CategoriesService {
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });
@@ -69,13 +69,13 @@ export class CategoriesService {
     updateDoc(docInstance, data).then((docRef) => {
       //console.log(docRef);
       this.toastr.success('Data Updated Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });
@@ -86,13 +86,13 @@ export class CategoriesService {
     deleteDoc(docInstance).then((docRef) => {
       //console.log(docRef);
       this.toastr.success('Data Deleted Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });

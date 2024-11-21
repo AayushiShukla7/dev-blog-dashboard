@@ -62,7 +62,7 @@ export class PostsService {
     addDoc(dbInstance, postData)
     .then((docRef) => {
       this.toastr.success('Data Inserted Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
 
@@ -70,7 +70,7 @@ export class PostsService {
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });
@@ -105,7 +105,7 @@ export class PostsService {
 
     updateDoc(docInstance, data).then((docRef) => {
       this.toastr.success('Data Updated Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
 
@@ -113,7 +113,7 @@ export class PostsService {
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });
@@ -123,17 +123,34 @@ export class PostsService {
     const docInstance = doc(this.firestore, 'posts', id);
     deleteDoc(docInstance).then((docRef) => {
       //console.log(docRef);
-      this.toastr.success('Data Deleted Successfully!', 'SUCCESS', {
-        timeOut: 5000,
+      this.toastr.warning('Data Deleted Successfully!', 'SUCCESS', {
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
-        timeOut: 5000,
+        timeOut: 3000,
         positionClass: 'toast-top-right'
       } );
     });
-  }  
+  } 
+  
+  markFeatured(id: string, featuredData: any) {
+    const docInstance = doc(this.firestore, 'posts', id);
+
+    updateDoc(docInstance, featuredData).then((docRef) => {
+      this.toastr.success('Featured Status Updated', 'SUCCESS', {
+        timeOut: 3000,
+        positionClass: 'toast-top-right'
+      } );
+    })
+    .catch(err => {
+      this.toastr.error(err.error, 'ERROR!', {
+        timeOut: 3000,
+        positionClass: 'toast-top-right'
+      } );
+    });
+  }
 
 }

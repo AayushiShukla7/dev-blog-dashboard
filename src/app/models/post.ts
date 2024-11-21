@@ -8,7 +8,7 @@ export interface Post {
     },
     postImagePath: string,
     content: string,
-    isfeatured: boolean,
+    isFeatured: boolean,
     views: number,
     status: string,
     createdAt: Date
