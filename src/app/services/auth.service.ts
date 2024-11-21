@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, authState, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private auth: Auth, private toastr: ToastrService, private router: Router) { }
 
@@ -18,6 +21,8 @@ export class AuthService {
         positionClass: 'toast-top-right'
       });
 
+      this.loadUser(logRef);
+      this.loggedIn.next(true);
       this.router.navigateByUrl('');  // Go to dashboard
     })
     .catch(err => {
@@ -26,6 +31,34 @@ export class AuthService {
         positionClass: 'toast-top-right'
       } );
     });
+  }
+
+  loadUser(userCred: any) {
+    //console.log(JSON.parse(JSON.stringify(userCred.user)));
+    localStorage.setItem('user', JSON.stringify(userCred.user));
+  }
+
+  logOut() {
+    signOut(this.auth).then(() => {
+      this.toastr.success('User Logged Out Successfully!', '', {
+        timeOut: 3000,
+        positionClass: 'toast-top-right'
+      });
+
+      localStorage.removeItem('user');  // Remove all user login data
+      this.loggedIn.next(false);
+      this.router.navigateByUrl('/login');  // Go to Login
+    })
+    .catch(err => {
+      this.toastr.error(err.error, 'ERROR!', {
+        timeOut: 3000,
+        positionClass: 'toast-top-right'
+      } );
+    });
+  }
+
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
 }
