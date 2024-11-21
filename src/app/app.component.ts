@@ -15,8 +15,6 @@ import { AngularEditorModule } from '@wfpena/angular-wysiwyg';
     CommonModule,
     HeaderComponent,
     FooterComponent,
-    DashboardComponent,
-    CategoriesComponent,
     AngularEditorModule
   ],
   templateUrl: './app.component.html',
