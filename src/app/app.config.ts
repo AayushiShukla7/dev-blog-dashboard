@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { routes } from './app.routes';
 import { environment } from '../environments/environment.development';
@@ -16,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
     provideAnimations(), // required animations providers
     provideToastr(), // Toastr providers
     provideHttpClient()

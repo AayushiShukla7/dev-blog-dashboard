@@ -12,7 +12,7 @@
                         <p> Please login to your admin account to post a new blog post </p>
                     </div>
 
-                    <form #loginForm="ngForm">
+                    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
 
                         <div class="form-group">
                             <input 

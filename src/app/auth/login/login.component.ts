@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +16,10 @@ import { FormsModule } from '@angular/forms';
 })
 export class LoginComponent {
 
-  // Email: any;
-  // Password: any;
+  constructor(private authService: AuthService) {}
 
-  constructor() {}
+  onSubmit(formValue: any) {
+    this.authService.login(formValue.email, formValue.password);
+  }
 
 }
