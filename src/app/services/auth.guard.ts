@@ -21,7 +21,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       timeOut: 3000,
       positionClass: 'toast-top-right' 
     });
-    router.navigateByUrl('/login');
+    router.navigateByUrl('/');
     return false;
   }
 

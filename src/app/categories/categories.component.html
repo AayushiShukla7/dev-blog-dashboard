@@ -50,19 +50,23 @@
                             <tr *ngFor="let categoryEntry of categoryArray; let i = index">
                                 <td> {{ i + 1 }} </td>
                                 <td>
-                                    <div *ngFor="let data of categoryEntry | keyvalue">
+                                    <!-- <div *ngFor="let data of categoryEntry | keyvalue">
                                         <div *ngFor="let category of data.value | keyvalue">
                                             {{ category.value }}
                                         </div>
-                                    </div>
+                                    </div> -->
+
+                                    {{ categoryEntry.data.category }}
                                 </td>
                                 <td>
-                                    <div *ngFor="let data of categoryEntry | keyvalue">
+                                    <!-- <div *ngFor="let data of categoryEntry | keyvalue">
                                         <div *ngFor="let category of data.value | keyvalue">
                                             <button class="btn btn-sm btn-warning" (click)="onEdit(categoryEntry, category.value)"> Edit </button>
                                             <button class="btn btn-sm btn-danger mx-2" (click)="onDelete(categoryEntry)"> Delete </button>
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    <button class="btn btn-sm btn-warning" (click)="onEdit(categoryEntry, categoryEntry.data.category)"> Edit </button>
+                                    <button class="btn btn-sm btn-danger mx-2" (click)="onDelete(categoryEntry)"> Delete </button>
                                 </td>
                             </tr>
                         </tbody>

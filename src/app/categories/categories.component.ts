@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 export class CategoriesComponent implements OnInit{
 
   categoryData: string = '';
-  categoryArray: Array<object> = [];
+  categoryArray: Array<any> = [];
   formStatus: string = 'Add';
   categoryId: string = '';
 
@@ -49,8 +49,8 @@ export class CategoriesComponent implements OnInit{
       this.categoriesService.updateData(this.categoryId, formData.value);
     }
 
-    formData.reset();
     this.loadCategories();
+    formData.reset();    
   }   
 
   onEdit(clickedObj:any, category:any) {
@@ -62,9 +62,9 @@ export class CategoriesComponent implements OnInit{
   onDelete(clickedObj:any) {
     if(confirm("Are you sure you want to delete this category?")) {
       this.categoryId = clickedObj["id"];
-      this.categoriesService.deleteData(this.categoryId);
-      this.loadCategories();
+      this.categoriesService.deleteData(this.categoryId);      
     }    
+    this.loadCategories();
   }
 
 }

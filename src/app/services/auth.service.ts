@@ -27,7 +27,7 @@ export class AuthService {
       this.loggedIn.next(true);
       this.isLoggedInGuard = true;
 
-      this.router.navigateByUrl('/');  // Go to dashboard
+      this.router.navigateByUrl('/dashboard');  // Go to dashboard
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
@@ -54,7 +54,7 @@ export class AuthService {
       this.loggedIn.next(false);
       this.isLoggedInGuard = false;
 
-      this.router.navigateByUrl('/login');  // Go to Login
+      this.router.navigateByUrl('/');  // Go to Login
     })
     .catch(err => {
       this.toastr.error(err.error, 'ERROR!', {
