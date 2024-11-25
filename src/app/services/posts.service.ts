@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { addDoc, collection, deleteDoc, doc, docData, Firestore, getDocs, query, updateDoc } from '@angular/fire/firestore';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
