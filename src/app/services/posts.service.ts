@@ -37,6 +37,7 @@ export class PostsService {
       //console.log(imageData);
       imageUrl = imageData.url;
       postData.postImagePath = imageUrl;
+      //postData.createdAt = new Date();
 
       if(formStatus == 'Edit') {
         this.updateData(id, postData);
